@@ -1,0 +1,419 @@
+<html>
+  <head>
+    <title>Serving Now (ReactJS)</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css">
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <script type="text/babel">
+      const useState = React.useState;
+      const BSclasses = ['Button', 'InputGroup', 'Form', 'Modal', 'Container',
+       'Row', 'Col', 'Image', 'Collapse', 'Card', 'ListGroup', 'Badge'];
+      BSclasses.map((className) => {
+        eval('window.'+className+' = ReactBootstrap.'+className+';')
+      });
+
+      function NavBar(props) {
+        return (
+          <Row className='bg-dark text-white d-flex flex-row justify-content-between py-3'
+           style={{'font-size':'50px'}}>
+            <Col xs={3} className='d-flex justify-content-center'>
+              <i onClick={props.toLogin} className='fas fa-user-circle align-self-center'/>
+            </Col>
+            <div className='flex-fill text-center'>
+              <span>
+                <Image fluid roundedCircle src='http://people.ucsc.edu/~zlind/infinite-options/logo.png'
+                style={{'max-height': '70px'}}/> {' '}
+                <h2>
+                  Serving Now
+                </h2>
+              </span>
+            </div>
+            <Col xs={3} className='d-flex justify-content-center'>
+              <Badge>{props.cartCount()}</Badge>
+              <i onClick={props.toCart} className='fas fa-shopping-cart align-self-center'/>
+            </Col>
+          </Row>
+        );
+      }
+
+      function SideBar(props) {
+        const [collapsed, setCollapsed] = useState(true);
+
+        const switchCollapse = () => setCollapsed(!collapsed);
+
+        const filters = ['All Categories', 'Fruit', 'Vegetables', 'Grocery', 'Meat', 'Seafood', 'Dairy', 'Pre-made Meals'];
+        const sorts = ['Relevance', 'Distance', 'Nutrition', 'Name'];
+
+        return (
+          <Col md={4}>
+            <InputGroup className='my-3'>
+              <InputGroup.Prepend className='d-md-none'>
+                <Button onClick={switchCollapse}>
+                  <i className='fas fa-filter'/>
+                </Button>
+              </InputGroup.Prepend>
+              <Form.Control placeholder='Search here'
+              style={{'box-shadow':'none'}} />
+              <InputGroup.Append>
+                <Button>
+                  <i className='fas fa-search'/>
+                </Button>
+              </InputGroup.Append>
+            </InputGroup>
+            <Collapse in={!collapsed}>
+              <Form className='d-md-table-row'>
+              <Form.Row>
+              <Col xs={6} md={12}>
+                <Form.Group>
+                  <Form.Label>Filters</Form.Label>
+                  {filters.map(f => {
+                    return (
+                      <Form.Check type='radio' name='filters'label={f}
+                      checked={f==props.filter} onClick={()=>props.setFilter(f)}/>
+                    );
+                  })}
+                </Form.Group>
+              </Col>
+              <Col xs={6} md={12}>
+                <Form.Group>
+                  <Form.Label>Sort by</Form.Label>
+                  {sorts.map(s => {
+                    return (
+                      <Form.Check type='radio' name='sorts' label={s}
+                      checked={s==props.sort} onClick={()=>props.setSort(s)} />
+                    );
+                  })}
+                </Form.Group>
+              </Col>
+              </Form.Row>
+              </Form>
+            </Collapse>
+          </Col>
+        );
+      }
+
+      function ItemList(props) {
+        const items = [
+          {name: 'Apple', src: 'http://people.ucsc.edu/~zlind/infinite-options/apple.jpg'},
+          {name: 'Filet Mignon', src: 'http://people.ucsc.edu/~zlind/infinite-options/filet.jpg'},
+          {name: 'Broccoli', src: 'http://people.ucsc.edu/~zlind/infinite-options/broccoli.jpg'},
+          {name: 'Salmon', src: 'http://people.ucsc.edu/~zlind/infinite-options/salmon.jpg'},
+          {name: 'Carrots', src: 'http://people.ucsc.edu/~zlind/infinite-options/carrot.jpg'},
+          {name: 'Milk', src: 'http://people.ucsc.edu/~zlind/infinite-options/milk.jpg'},
+          {name: 'Chicken', src: 'http://people.ucsc.edu/~zlind/infinite-options/chicken.jpg'},
+          {name: 'Ribeye', src: 'http://people.ucsc.edu/~zlind/infinite-options/ribeye.jpg'}
+        ];
+        const displayItems = () => {
+          // SELECT * FROM ITEMS WHERE CATEGORY = filter SORTBY sort
+        }
+
+        return (
+          <Col md={8}>
+            <Row>
+              {items.map(item => {
+                return (
+                  <Col xs={6} md={4} lg={3} className='p-0 d-flex flex-column'>
+                    <Card className='flex-fill'
+                     onClick={() => props.viewItem(item)}>
+                      <Card.Img variant='top' src={item.src} />
+                      <Card.Body>
+                        <Card.Title>{item.name}</Card.Title>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                );
+              })}
+            </Row>
+          </Col>
+        );
+      }
+
+      function BrowseScreen(props) {
+        const [filter, setFilter] = useState('All Categories');
+        const [sort, setSort] = useState('Relevance');
+
+        return (
+          <Row className='h-100'>
+            <SideBar sort={sort} setSort={setSort}
+             filter={filter} setFilter={setFilter}/>
+            <ItemList viewItem={props.viewItem} sort={sort} filter={filter}/>
+          </Row>
+        );
+      }
+
+      function ItemView(props) {
+        const [itemCount, setItemCount] = useState(0);
+
+        const decreaseCount = () => setItemCount(itemCount > 0 ? itemCount-1 : 0);
+        const increaseCount = () => setItemCount(itemCount < 50 ? itemCount+1 : 50);
+
+        const close = () => { props.closeFn(); setItemCount(0); }
+
+        return (
+          <Modal show={props.show} onHide={close} centered>
+            <Modal.Header closeButton>
+              <Modal.Title>{props.item.name}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Image fluid src={props.item.src} className='w-100'/>
+            </Modal.Body>
+            <Modal.Footer className='d-flex justify-content-between'>
+              <div>
+                <Button onClick={decreaseCount}>
+                  <i className='fas fa-minus'/>
+                </Button>
+                <span className='mx-3'>{itemCount}</span>
+                <Button onClick={increaseCount}>
+                  <i className='fas fa-plus'/>
+                </Button>
+              </div>
+              <Button onClick={() => props.addItem(itemCount)} disabled={itemCount==0}>
+              Add to cart</Button>
+            </Modal.Footer>
+          </Modal>
+        );
+      }
+
+      function LoginScreen(props) {
+        const [newUser, setNewUser] = useState(false);
+
+        function submitLogin() {
+          var form = document.querySelector('#login-form');
+          if (form.checkValidity()) {
+            // submit form to server, login customer
+            props.closeFn();
+          } else {
+            form.className = 'mx-3 was-validated';
+          }
+        }
+
+        function submitSignup() {
+          var form = document.querySelector('#signup-form');
+          if (form.checkValidity()) {
+            var em1 = form.querySelector('#signup-email');
+            var em2 = form.querySelector('#match-email');
+            var pw1 = form.querySelector('#signup-password');
+            var pw2 = form.querySelector('#match-password');
+            var stillValid = true;
+            if (em1.value != em2.value) {
+              em2.setCustomValidity('invalid'); stillValid = false;
+            } else { em2.valid = true; }
+            if (pw1.value != pw2.value) {
+              pw2.setCustomValidity('invalid'); stillValid = false;
+            } else { pw2.valid = true; }
+            if (stillValid) props.closeFn();
+            // submit form to server, create customer account, login
+          } else {
+            form.className = 'mx-3 was-validated';
+          }
+        }
+        
+        return (
+          <Modal show={props.show} onHide={props.closeFn} centered>
+            <Modal.Header closeButton>
+              <Modal.Title>{newUser ? 'Create account' : 'Sign in'}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              {newUser ?
+              (<Form className='mx-3' id='signup-form' noValidate>
+                <Form.Group>
+                  <Form.Label>Email</Form.Label>
+                  <InputGroup>
+                    <InputGroup.Prepend>
+                      <Button disabled style={{'cursor':'default'}}>
+                        <i className='fas fa-envelope'/>
+                      </Button>
+                    </InputGroup.Prepend>
+                    <Form.Control type='email' placeholder='Enter your email'
+                    id='signup-email' style={{'box-shadow':'none'}}
+                    required pattern='^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$'/>
+                    <Form.Control.Feedback type='invalid'>
+                      Enter a valid email address
+                    </Form.Control.Feedback>
+                  </InputGroup>
+                  <InputGroup className='mt-2'>
+                    <InputGroup.Prepend>
+                      <Button disabled style={{'cursor':'default'}}>
+                        <i className='fas fa-envelope'/>
+                      </Button>
+                    </InputGroup.Prepend>
+                    <Form.Control type='email' placeholder='Retype email'
+                    id='match-email' style={{'box-shadow':'none'}}
+                    required pattern='^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$'/>
+                    <Form.Control.Feedback type='invalid'>
+                      Emails must match
+                    </Form.Control.Feedback>
+                  </InputGroup>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Password</Form.Label>
+                  <InputGroup>
+                    <InputGroup.Prepend>
+                      <Button disabled style={{'cursor':'default'}}>
+                        <i className='fas fa-key'/>
+                      </Button>
+                    </InputGroup.Prepend>
+                    <Form.Control type='password' placeholder='Enter your password'
+                    id='signup-password' style={{'box-shadow':'none'}}
+                    required minlength='8' maxlength='24'/>
+                    <Form.Control.Feedback type='invalid'>
+                      Your password must be 8-24 characters long
+                    </Form.Control.Feedback>
+                  </InputGroup>
+                  <InputGroup className='mt-2'>
+                    <InputGroup.Prepend>
+                      <Button disabled style={{'cursor':'default'}}>
+                        <i className='fas fa-key'/>
+                      </Button>
+                    </InputGroup.Prepend>
+                    <Form.Control type='password' placeholder='Retype password'
+                    id='match-password' style={{'box-shadow':'none'}}
+                    required minlength='8' maxlength='24'/>
+                    <Form.Control.Feedback type='invalid'>
+                      Passwords must match
+                    </Form.Control.Feedback>
+                  </InputGroup>
+                </Form.Group>
+                <Button onClick={submitSignup} block>Create account</Button>
+              </Form>) : 
+              (<Form className='mx-3' id='login-form'>
+                <Form.Group>
+                  <Form.Label>Email</Form.Label>
+                  <InputGroup>
+                    <InputGroup.Prepend>
+                      <Button disabled style={{'cursor':'default'}}>
+                        <i className='fas fa-envelope'/>
+                      </Button>
+                    </InputGroup.Prepend>
+                    <Form.Control type='email' placeholder='Enter your email'
+                    id='login-email' style={{'box-shadow':'none'}}/>
+                  </InputGroup>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Password</Form.Label>
+                  <InputGroup>
+                    <InputGroup.Prepend>
+                      <Button disabled style={{'cursor':'default'}}>
+                        <i className='fas fa-key'/>
+                      </Button>
+                    </InputGroup.Prepend>
+                    <Form.Control type='password' placeholder='Enter your password'
+                    id='login-password' style={{'box-shadow':'none'}}/>
+                  </InputGroup>
+                </Form.Group>
+                <Form.Group>
+                    <Form.Check type='checkbox' label='Remember me' inline/>
+                    <small className='float-right'>
+                      <a href='#'>Forgot password?</a>
+                    </small>
+                </Form.Group>
+                <Button onClick={submitLogin} block>Log in</Button>
+              </Form>)}
+              
+            </Modal.Body>
+            <Modal.Footer>
+              {newUser ? 
+              (<p>Already registered? {' '} <a href='#' 
+              onClick={() => setNewUser(false)}>Log in</a>
+              </p>) : 
+              (<p>Don't have an account? {' '} <a href='#' 
+              onClick={() => setNewUser(true)}>Sign up</a>
+              </p>)}
+            </Modal.Footer>
+          </Modal>
+        );
+      }
+
+      function CartScreen(props) {
+        return (
+          <Modal show={props.show} onHide={props.closeFn} centered>
+            <Modal.Header closeButton>
+              <Modal.Title>Shopping Cart</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              {(props.cart.length == 0 ? <p>Your cart is empty</p> : null)}
+              <ListGroup>
+                {props.cart.map(ci => {
+                  return (
+                    <ListGroup.Item>{ci.item.name}
+                      <Button className='float-right ml-3' onClick={() => props.removeItem(ci)}>
+                        <i className='fas fa-minus-circle'/>
+                      </Button>
+                      <span className='float-right'>x{' '+ci.count}</span>
+                    </ListGroup.Item>
+                  );
+                })}
+              </ListGroup>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button disabled={props.cart.length == 0}>Proceed to Checkout</Button>
+            </Modal.Footer>
+          </Modal>
+        );
+      }
+
+      function App() {
+        const [modal, setModal] = useState('none');
+        const [cart, setCart] = useState([]);
+        const [items, setItems] = useState([]);
+        const [selected, setSelected] = useState({});
+
+        const addToCart = (i, c) => {
+          var cartCopy = [...cart];
+          var added = false;
+          for (var index=0; index<cartCopy.length; index++) {
+            var ci = cartCopy[index];
+            if (ci.item.name == i.name) {
+              ci.count += c;
+              added = true;
+            }
+          }
+          if (!added) cartCopy.push({item: i, count: c});
+          setCart(cartCopy);
+        }
+        const addSelected = (c) => addToCart(selected, c)
+        const cartCount = () => cart.reduce((a, b) => a+b.count, 0);
+        const removeItem = (ci) => {
+          var cartCopy = [...cart];
+          var index = cartCopy.indexOf(ci);
+          cartCopy[index].count -= 1
+          if (cartCopy[index].count == 0) cartCopy.splice(index, 1);
+          setCart(cartCopy);
+        }
+
+        const closeModal = () => setModal('none');
+        const openLogin = () => setModal('login');
+        const openCart = () => setModal('cart');
+        const viewItem = (item) => {
+          setSelected(item); setModal('item');
+        }
+
+        return (
+          <Container fluid className='bg-light'>
+            <NavBar toLogin={openLogin} toCart={openCart} cart={cart} cartCount={cartCount}/>
+            <BrowseScreen viewItem={viewItem}/>
+            <ItemView show={modal=='item'} closeFn={closeModal}
+             item={selected} addItem={addSelected}/>
+            <LoginScreen show={modal=='login'} closeFn={closeModal}/>
+            <CartScreen show={modal=='cart'} closeFn={closeModal}
+             cart={cart} cartCount={cartCount} removeItem={removeItem}/>
+          </Container>
+        );
+      }
+
+      ReactDOM.render(
+        <App />,
+        document.querySelector('#app')
+      );
+    </script>
+  </body>
+</html>

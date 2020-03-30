@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Serving Now - Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css">
+</head>
+<body>
+    <div class="container-fluid d-flex justify-content-center">
+        <form id="login-form" class="d-flex flex-column w-50"
+         onsubmit="return submitLogin()" novalidate>
+            <div class="form-group mt-3">
+                <label for="login-email">Email</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                    </div>
+                    <input id="login-email" class="form-control"
+                     type="email" placeholder="email" required/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="login-pword">Password</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="fas fa-key"></i>
+                        </div>
+                    </div>
+                    <input id="login-pword" class="form-control"
+                    type="password" placeholder="password" required/>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary align-self-center w-50">
+                Log in
+            </button>
+            <p class="align-self-center mt-2">
+                New user? <a href="./signup.html">Sign up</a> here
+            </p>
+        </form>
+    </div>
+
+
+    <script>
+        function submitLogin() {
+            var form = document.querySelector('#login-form');
+            var email = document.querySelector('#login-email');
+            var pword = document.querySelector('#login-pword');
+            if (form.checkValidity()) {
+                console.log('valid form: email ('+email.value+') password ('+pword.value+')');
+            } else {
+                console.log('invalid form');
+                form.classList.add('was-validated')
+            }
+            return false;
+        }
+    </script>
+
+</body>
+</html>
