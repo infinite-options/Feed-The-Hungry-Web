@@ -47,10 +47,10 @@ function Login(props) {
                         </InputGroup.Text>
                      </InputGroup.Prepend>
                      <Form.Control placeholder='email' id='login-email' required/>
+                     <Form.Control.Feedback type="invalid">
+                        Enter your email address
+                     </Form.Control.Feedback>
                   </InputGroup>
-                  <Form.Control.Feedback type="invalid">
-                     Enter your email address
-                  </Form.Control.Feedback>
                </Form.Group>
                <Form.Group>
                   <Form.Label>Password</Form.Label>
@@ -68,10 +68,10 @@ function Login(props) {
                             id='hide-icon' />
                         </InputGroup.Text>
                      </InputGroup.Append>
+                     <Form.Control.Feedback type="invalid">
+                        Enter your password
+                     </Form.Control.Feedback>
                   </InputGroup>
-                  <Form.Control.Feedback type="invalid">
-                     Enter your password
-                  </Form.Control.Feedback>
                </Form.Group>
                <Button type='submit' className='align-self-center w-50'>Log in</Button>
             </Form>

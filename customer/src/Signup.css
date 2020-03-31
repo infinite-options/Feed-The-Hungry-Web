@@ -1,0 +1,3 @@
+.was-validated :invalid ~ .invalid-feedback {
+    display: block;
+}

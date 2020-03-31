@@ -12,6 +12,7 @@ function App() {
     return (
       <>
         {/* todo: store list, browse, checkout */}
+        <h1>Store List, Browse, Checkout, and more</h1>
       </>
     );
   } else {
