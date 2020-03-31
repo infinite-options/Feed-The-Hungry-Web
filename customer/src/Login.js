@@ -5,7 +5,7 @@ import { faEnvelope, faKey, faEye, faEyeSlash }
    from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function Login() {
+function Login(props) {
    const [pwordHidden, setPwordHidden] = useState(true);
    const [badLogin, setBadLogin] = useState(false);
 
@@ -19,7 +19,7 @@ function Login() {
          // try login to server, return false if bad credentials
          var loginSuccess = true;
          if (loginSuccess) {
-            window.location = 'index.html';
+            props.loginSuccess();
          } else {
             setBadLogin(true);
          }
@@ -31,7 +31,10 @@ function Login() {
    }
 
    return (
-      <Modal show={true}>
+      <Modal show={props.show} onHide={props.close}>
+         <Modal.Header closeButton>
+            <Modal.Title>Log in</Modal.Title>
+         </Modal.Header>
          <Modal.Body>
             <p className='text-danger' hidden={!badLogin}>Invalid login, try again</p>
             <Form className='d-flex flex-column' id='login-form' onSubmit={submitLogin} noValidate>
