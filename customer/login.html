@@ -1,62 +1,109 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Serving Now - Login</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css">
+   <title>Serving Now - Log in</title>
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+   <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css">
+
+   <script src="https://unpkg.com/react@16/umd/react.production.min.js" defer></script>
+   <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" defer></script>
+   <script src="https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js" defer></script>
+   <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js" defer></script>
 </head>
 <body>
-    <div class="container-fluid d-flex justify-content-center">
-        <form id="login-form" class="d-flex flex-column w-50"
-         onsubmit="return submitLogin()" novalidate>
-            <div class="form-group mt-3">
-                <label for="login-email">Email</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                    </div>
-                    <input id="login-email" class="form-control"
-                     type="email" placeholder="email" required/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="login-pword">Password</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <i class="fas fa-key"></i>
-                        </div>
-                    </div>
-                    <input id="login-pword" class="form-control"
-                    type="password" placeholder="password" required/>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary align-self-center w-50">
-                Log in
-            </button>
-            <p class="align-self-center mt-2">
-                New user? <a href="./signup.html">Sign up</a> here
-            </p>
-        </form>
-    </div>
+   <div id="login-modal"></div>
 
+   <script type='text/babel' defer>
+      const useState = React.useState;
+      const BSModules = ['Modal', 'Form', 'InputGroup', 'Button'];
+      BSModules.map(module => eval('window.'+module+' = ReactBootstrap.'+module));
 
-    <script>
-        function submitLogin() {
-            var form = document.querySelector('#login-form');
+      function Login(props) {
+         const [pwordHidden, setPwordHidden] = useState(true);
+         const [badLogin, setBadLogin] = useState(false);
+
+         const togglePassword = () => {
+            var hideIcon = document.querySelector('#hideIcon');
+            var pword = document.querySelector('#login-pword');
+            if (pwordHidden) {
+               hideIcon.className = 'fas fa-eye';
+               pword.type = 'text';
+            } else {
+               hideIcon.className = 'fas fa-eye-slash';
+               pword.type = 'password';
+            }
+            setPwordHidden(!pwordHidden);
+         }
+
+         const submitLogin = event => {
+            event.preventDefault();
+            var form = event.target;
             var email = document.querySelector('#login-email');
             var pword = document.querySelector('#login-pword');
             if (form.checkValidity()) {
-                console.log('valid form: email ('+email.value+') password ('+pword.value+')');
+               console.log('valid form: email ('+email.value+') password ('+pword.value+')');
+               // try login to server, return false if bad credentials
+               var loginSuccess = true;
+               if (loginSuccess) {
+                  window.location = 'index.html';
+               } else {
+                  setBadLogin(true);
+               }
             } else {
-                console.log('invalid form');
-                form.classList.add('was-validated')
+               console.log('invalid form');
+               form.classList.add('was-validated');
             }
             return false;
-        }
-    </script>
+         }
+
+         return (
+            <Modal show={true}>
+               <Modal.Body>
+                  <p className='text-danger' hidden={!badLogin}>Invalid login, try again</p>
+                  <Form className='d-flex flex-column' id='login-form' onSubmit={submitLogin} noValidate>
+                     <Form.Group>
+                        <Form.Label>Email</Form.Label>
+                        <InputGroup>
+                           <InputGroup.Prepend>
+                              <InputGroup.Text>
+                                 <i className='fas fa-envelope'/>
+                              </InputGroup.Text>
+                           </InputGroup.Prepend>
+                           <Form.Control placeholder='email' id='login-email' required/>
+                           <Form.Control.Feedback type="invalid">
+                              Enter your email address
+                           </Form.Control.Feedback>
+                        </InputGroup>
+                     </Form.Group>
+                     <Form.Group>
+                        <Form.Label>Password</Form.Label>
+                        <InputGroup>
+                           <InputGroup.Prepend>
+                              <InputGroup.Text>
+                                 <i className='fas fa-key'/>
+                              </InputGroup.Text>
+                           </InputGroup.Prepend>
+                           <Form.Control type='password' placeholder='password' id='login-pword' required/>
+                           <InputGroup.Append onClick={togglePassword}>
+                              <InputGroup.Text>
+                                 <i className='fas fa-eye-slash' id='hideIcon'/>
+                              </InputGroup.Text>
+                           </InputGroup.Append>
+                           <Form.Control.Feedback type="invalid">
+                              Enter your password
+                           </Form.Control.Feedback>
+                        </InputGroup>
+                     </Form.Group>
+                     <Button type='submit' className='align-self-center w-50'>Log in</Button>
+                  </Form>
+               </Modal.Body>
+            </Modal>
+         );
+      }
+
+      ReactDOM.render(<Login/>, document.querySelector('#login-modal'));
+
+   </script>
 
 </body>
 </html>
