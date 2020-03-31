@@ -1,22 +1,13 @@
 import React, {useState} from 'react';
 import {Modal, Form, InputGroup, Button} from 'react-bootstrap';
 
-function Login(props) {
+import { faEnvelope, faKey, faEye, faEyeSlash } 
+   from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+function Login() {
    const [pwordHidden, setPwordHidden] = useState(true);
    const [badLogin, setBadLogin] = useState(false);
-
-   const togglePassword = () => {
-      var hideIcon = document.querySelector('#hideIcon');
-      var pword = document.querySelector('#login-pword');
-      if (pwordHidden) {
-         hideIcon.className = 'fas fa-eye';
-         pword.type = 'text';
-      } else {
-         hideIcon.className = 'fas fa-eye-slash';
-         pword.type = 'password';
-      }
-      setPwordHidden(!pwordHidden);
-   }
 
    const submitLogin = event => {
       event.preventDefault();
@@ -49,7 +40,7 @@ function Login(props) {
                   <InputGroup>
                      <InputGroup.Prepend>
                         <InputGroup.Text>
-                           <i className='fas fa-envelope'/>
+                           <FontAwesomeIcon icon={faEnvelope} />
                         </InputGroup.Text>
                      </InputGroup.Prepend>
                      <Form.Control placeholder='email' id='login-email' required/>
@@ -63,13 +54,15 @@ function Login(props) {
                   <InputGroup>
                      <InputGroup.Prepend>
                         <InputGroup.Text>
-                           <i className='fas fa-key'/>
+                           <FontAwesomeIcon icon={faKey} />
                         </InputGroup.Text>
                      </InputGroup.Prepend>
-                     <Form.Control type='password' placeholder='password' id='login-pword' required/>
-                     <InputGroup.Append onClick={togglePassword}>
+                     <Form.Control type={pwordHidden ? 'password' : 'text'}
+                      placeholder='password' id='login-pword' required/>
+                     <InputGroup.Append onClick={() => setPwordHidden(!pwordHidden)}>
                         <InputGroup.Text>
-                           <i className='fas fa-eye-slash' id='hideIcon'/>
+                           <FontAwesomeIcon icon={pwordHidden ? faEyeSlash : faEye}
+                            id='hide-icon' />
                         </InputGroup.Text>
                      </InputGroup.Append>
                   </InputGroup>
