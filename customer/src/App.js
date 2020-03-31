@@ -9,7 +9,9 @@ function App() {
 
   if (loggedIn) {
     return (
-      <></>
+      <>
+        {/* todo: add signup, store list, browse, checkout */}
+      </>
     );
   } else {
     return (
