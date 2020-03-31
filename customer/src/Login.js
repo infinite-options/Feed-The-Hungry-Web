@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {Modal, Form, InputGroup, Button} from 'react-bootstrap';
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faKey, faEye, faEyeSlash } 
    from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Login(props) {
    const [pwordHidden, setPwordHidden] = useState(true);
@@ -19,7 +19,7 @@ function Login(props) {
          // try login to server, return false if bad credentials
          var loginSuccess = true;
          if (loginSuccess) {
-            props.loginSuccess();
+            props.success();
          } else {
             setBadLogin(true);
          }

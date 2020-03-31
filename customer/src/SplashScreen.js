@@ -1,13 +1,15 @@
 import React from 'react';
-import {Button} from 'react-bootstrap';
+import {Jumbotron, Button} from 'react-bootstrap';
 
 function SplashScreen(props) {
     return (
-        <>
+        <Jumbotron>
             {/* todo: prettify, link to sign up */}
             <h1>Welcome to Serving Now</h1>
-            <Button onClick={props.login}>Log in</Button>
-        </>
+            <p>Helping the hungry find the food they need</p>
+            <Button onClick={props.login} className='mx-3'>Log in</Button>
+            <Button onClick={props.signup} className='mx-3'>Sign up</Button>
+        </Jumbotron>
     );
 }
 
