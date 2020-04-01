@@ -48,7 +48,7 @@ function Signup(props) {
    return (
       <Modal show={props.show} onHide={props.close}>
          <Modal.Header closeButton>
-            <Modal.Title>Sign up</Modal.Title>
+            <Modal.Title>Create a new account</Modal.Title>
          </Modal.Header>
          <Modal.Body>
             <Form className='d-flex flex-column' id='signup-form' onSubmit={submitSignup} noValidate>
