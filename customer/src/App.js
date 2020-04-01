@@ -24,7 +24,6 @@ function App() {
   return (
     loggedIn ? 
     <>
-      <h1>Logged in view: {view}</h1>
       {view === 'list' ? <FoodBankList foodbanks={foodbanks} select={bank=>{setCurrentBank(bank); setView('bank')}}/> :
        view === 'bank' ? <Browse bank={currentBank} back={()=>setView('list')}/> :
        view === 'checkout' ? '' : ''}
