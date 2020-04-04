@@ -1,0 +1,11 @@
+.jumbotron {
+  padding: 0;
+  margin: 0;
+  background-image: url('./background.jpg');
+}
+
+.filter {
+  height: 800px;
+  background-color: rgba(0, 0, 0, .5);
+  backdrop-filter: blur(8px);
+}
