@@ -9,3 +9,7 @@
   background-color: rgba(0, 0, 0, .5);
   backdrop-filter: blur(8px);
 }
+
+.container * {
+  margin: 1.5rem;
+}

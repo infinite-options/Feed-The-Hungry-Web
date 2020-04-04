@@ -1,18 +1,23 @@
 import React from 'react';
-import {ListGroup} from 'react-bootstrap';
+import {Container, Row, Button, ListGroup} from 'react-bootstrap';
 
 function FoodBankList(props) {
    return (
-      <>
-         <h1>Food Bank List</h1>
-         <ListGroup>
-            {props.foodbanks.map(bank => (
-               <ListGroup.Item onClick={()=>props.select(bank)}>
-                  {bank.name}, {bank.food.length} items
-               </ListGroup.Item>
-            ))}
-         </ListGroup>
-      </>
+      <Container>
+         <Row className='d-flex justify-content-around'>
+            <h1>Food Bank List</h1>
+            <Button>Map view</Button>
+         </Row>
+         <Row className='d-flex'>
+            <ListGroup className='flex-fill' variant='flush'>
+               {props.foodbanks.map(bank => (
+                  <ListGroup.Item onClick={()=>props.select(bank)}>
+                     {bank.name}, {bank.food.length} items
+                  </ListGroup.Item>
+               ))}
+            </ListGroup>
+         </Row>
+      </Container>
    );
 }
 
