@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Container, Row, Col} from 'react-bootstrap';
+import {Button, Container, Row} from 'react-bootstrap';
 import 'google-maps';
 
 import './Map.css';
@@ -9,7 +9,7 @@ class Map extends React.Component {
   componentDidMount() {
     var map = new window.google.maps.Map(document.querySelector('#map'), {
       center: {lat: -34.397, lng: 150.644},
-      zoom: 10
+      zoom: 12
     });
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
@@ -28,7 +28,7 @@ class Map extends React.Component {
 
   render() {
     return (
-      <Container fluid className='d-flex flex-column justify-content-between'>
+      <Container fluid className='d-flex flex-column justify-content-between mt-3'>
         <Row className='d-flex justify-content-center'>
           <div id='map'></div>
         </Row>

@@ -18,8 +18,8 @@ let foodbanks = [
 
 function App() {
   const [modal, setModal] = useState('none');
-  const [loggedIn, setLoggedIn] = useState(true);
-  const [view, setView] = useState('map');
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [view, setView] = useState('list');
   const [currentBank, setCurrentBank] = useState(foodbanks[0]);
 
   return (
