@@ -11,7 +11,8 @@ function FoodBankList(props) {
          <Row className='d-flex'>
             <ListGroup className='flex-fill' variant='flush'>
                {props.foodbanks.map(bank => (
-                  <ListGroup.Item onClick={()=>props.select(bank)}>
+                  <ListGroup.Item onClick={()=>props.select(bank)}
+                   key={bank.id}>
                      {bank.name}, {bank.food.length} items
                   </ListGroup.Item>
                ))}
