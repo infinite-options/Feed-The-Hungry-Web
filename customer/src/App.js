@@ -5,6 +5,7 @@ import Login from './Login.js';
 import Signup from './Signup.js';
 import FoodBankList from './FoodBankList.js';
 import Browse from './Browse.js';
+import Map from './Map.js';
 
 let foodbanks = [
   {name: 'Food Not Bombs', food: [{name: 'Apple'}, {name: 'Banana'}, {name: 'Orange'}]},
@@ -18,13 +19,14 @@ let foodbanks = [
 function App() {
   const [modal, setModal] = useState('none');
   const [loggedIn, setLoggedIn] = useState(true);
-  const [view, setView] = useState('list');
+  const [view, setView] = useState('map');
   const [currentBank, setCurrentBank] = useState(foodbanks[0]);
 
   return (
     loggedIn ? 
     <>
-      {view === 'list' ? <FoodBankList foodbanks={foodbanks} select={bank=>{setCurrentBank(bank); setView('bank')}}/> :
+      {view === 'map' ? <Map toList={() => setView('list')}/> :
+       view === 'list' ? <FoodBankList foodbanks={foodbanks} select={bank=>{setCurrentBank(bank); setView('bank')}} toMap={() => setView('map')}/> :
        view === 'bank' ? <Browse bank={currentBank} back={()=>setView('list')}/> :
        view === 'checkout' ? '' : ''}
     </>

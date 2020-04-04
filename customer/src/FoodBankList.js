@@ -6,7 +6,7 @@ function FoodBankList(props) {
       <Container>
          <Row className='d-flex justify-content-around'>
             <h1>Food Bank List</h1>
-            <Button>Map view</Button>
+            <Button onClick={props.toMap}>Map view</Button>
          </Row>
          <Row className='d-flex'>
             <ListGroup className='flex-fill' variant='flush'>
