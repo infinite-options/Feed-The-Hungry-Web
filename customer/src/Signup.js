@@ -46,7 +46,7 @@ function Signup(props) {
    }
 
    return (
-      <Modal show={props.show} onHide={props.close}>
+      <Modal show={props.show} onHide={props.close} centered>
          <Modal.Header closeButton>
             <Modal.Title>Create a new account</Modal.Title>
          </Modal.Header>

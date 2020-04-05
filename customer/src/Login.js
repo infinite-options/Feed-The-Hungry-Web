@@ -31,7 +31,7 @@ function Login(props) {
    }
 
    return (
-      <Modal show={props.show} onHide={props.close}>
+      <Modal show={props.show} onHide={props.close} centered>
          <Modal.Header closeButton>
             <Modal.Title>Log in</Modal.Title>
          </Modal.Header>

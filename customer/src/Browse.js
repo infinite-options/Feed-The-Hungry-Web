@@ -3,6 +3,8 @@ import {ListGroup, Container, Button, Row, Col} from 'react-bootstrap';
 
 import {Plus, Dash, Bag, ArrowLeftShort} from 'react-bootstrap-icons';
 
+import Cart from './Cart.js';
+
 
 function Browse(props) {
    var startCounts = new Map();
@@ -10,6 +12,7 @@ function Browse(props) {
       startCounts.set(props.bank.food[item], 0);
    }
    const [itemCounts, setItemCounts] = React.useState(new Map(startCounts));
+   const [cartShown, setCartShown] = React.useState(false);
 
    const decreaseItemCount = (item) => {
       console.log('decrease item'+item);
@@ -31,17 +34,30 @@ function Browse(props) {
       return total;
    }
 
+   const cart = () => {
+      var cart = [];
+      for (var item in props.bank.food) {
+         if (itemCounts.get(props.bank.food[item]) > 0) {
+            cart.push({item: props.bank.food[item], count: itemCounts.get(props.bank.food[item])});
+         }
+      }
+      return cart;
+   }
+
    return (
       <Container>
          <Row className='d-flex justify-content-around'>
             <ArrowLeftShort onClick={props.back} size={48}/>
             <h1>{props.bank.name}</h1>
-            <Bag onClick={props.back} size={48}/>
+            <span>
+               <Bag onClick={() => setCartShown(true)} size={48} className='m-0 p-0'/>
+               <p className='h3 d-inline'>{totalCount()}</p>
+            </span>
          </Row>
          <Row>
             <ListGroup variant='flush' className='flex-fill'>
                {props.bank.food.map(item => (
-                  <ListGroup.Item key={props.bank.id} className='m-0 d-flex flex-row'>
+                  <ListGroup.Item key={props.bank.id} className='m-0 d-flex flex-row justify-content-between'>
                      <Col className='align-self-center' xs={8}>
                         {item.name}
                      </Col>
@@ -56,6 +72,7 @@ function Browse(props) {
                ))}
             </ListGroup>
          </Row>
+         <Cart show={cartShown} hide={()=>setCartShown(false)} cart={cart()}/>
       </Container>
    );
 }
