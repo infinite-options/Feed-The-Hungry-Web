@@ -45,7 +45,7 @@ function Browse(props) {
    }
 
    return (
-      <Container>
+      <Container fluid className='p-3'>
          <Row className='d-flex justify-content-around'>
             <ArrowLeftShort onClick={props.back} size={48}/>
             <h1>{props.bank.name}</h1>
@@ -54,24 +54,24 @@ function Browse(props) {
                <p className='h3 d-inline'>{totalCount()}</p>
             </span>
          </Row>
-         <Row>
+         <Container>
             <ListGroup variant='flush' className='flex-fill'>
                {props.bank.food.map(item => (
                   <ListGroup.Item key={props.bank.id} className='m-0 d-flex flex-row justify-content-between'>
-                     <Col className='align-self-center' xs={8}>
+                     <div className='align-self-center' xs={8}>
                         {item.name}
-                     </Col>
-                     <Col xs={4} className='d-flex flex-row justify-content-between'>
+                     </div>
+                     <div className='float-right'>
                         <Dash onClick={()=>decreaseItemCount(item)} className='align-self-center'/>
-                        <span className='align-self-center'>
+                        <span className='align-self-center mx-1'>
                            {itemCounts.get(item)+'/'+item.max}
                         </span>
                         <Plus onClick={()=>increaseItemCount(item)} className='align-self-center'/>
-                     </Col>
+                     </div>
                   </ListGroup.Item>
                ))}
             </ListGroup>
-         </Row>
+         </Container>
          <Cart show={cartShown} hide={()=>setCartShown(false)} cart={cart()}/>
       </Container>
    );
