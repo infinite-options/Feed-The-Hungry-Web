@@ -10,6 +10,6 @@
   backdrop-filter: blur(8px);
 }
 
-.container * {
-  margin: 1.5rem;
+.was-validated .form-group .invalid-feedback {
+  display: block;
 }
