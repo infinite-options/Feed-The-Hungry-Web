@@ -63,11 +63,11 @@ function Signup(props) {
          <Modal.Body>
             <Form className='d-flex flex-column' ref={form} onSubmit={submitSignup} noValidate>
                <Form.Row>
-                  <Form.Group as={Col}>
+                  <Form.Group as={Col} md={6}>
                      <Form.Label>First Name</Form.Label>
                      <Form.Control ref={first} type='text' placeholder='first' required/>
                   </Form.Group>
-                  <Form.Group as={Col}>
+                  <Form.Group as={Col} md={6}>
                      <Form.Label>Last Name</Form.Label>
                      <Form.Control ref={last} type='text' placeholder='last' required/>
                   </Form.Group>
@@ -81,7 +81,7 @@ function Signup(props) {
                   <Form.Control ref={email} type='email' placeholder='email' required/>
                </Form.Group>
                <Form.Row>
-                  <Form.Group as={Col}>
+                  <Form.Group as={Col} md={6}>
                      <Form.Label>Password</Form.Label>
                      <InputGroup>
                         <Form.Control ref={pword} type={pwordHidden ? 'password' : 'text'}
@@ -97,7 +97,7 @@ function Signup(props) {
                         </InputGroup.Append>
                      </InputGroup>
                   </Form.Group>
-                  <Form.Group as={Col}>
+                  <Form.Group as={Col} md={6}>
                      <Form.Label>Confirm Password</Form.Label>
                      <InputGroup>
                         <Form.Control ref={pwordMatch} type={pwordHidden ? 'password' : 'text'}
@@ -130,11 +130,11 @@ function Signup(props) {
                      <Form.Control type='text' placeholder='apartment'/>
                   </Form.Group>
                   <Form.Row>
-                     <Form.Group as={Col}>
+                     <Form.Group as={Col} md={4}>
                         <Form.Label>City</Form.Label>
                         <Form.Control type='text' placeholder='city' required={addrShown}/>
                      </Form.Group>
-                     <Form.Group as={Col}>
+                     <Form.Group as={Col} md={4}>
                         <Form.Label>State</Form.Label>
                         <Form.Control as='select' ref={state} onChange={checkForm}>
                            <option value="N/A">choose...</option>
@@ -191,14 +191,14 @@ function Signup(props) {
                            <option value="WY">Wyoming</option>
                         </Form.Control>
                      </Form.Group>
-                     <Form.Group as={Col}>
+                     <Form.Group as={Col} md={4}>
                         <Form.Label>Zip</Form.Label>
                         <Form.Control type='text' placeholder='zip' required={addrShown} pattern='[0-9]{5}'/>
                      </Form.Group>
                   </Form.Row>
                </div> 
                <Form.Row>
-                  <Form.Group as={Col}>
+                  <Form.Group as={Col} md={6}>
                      <Form.Label>Dietary Restrictions</Form.Label>
                      <Form.Check type='checkbox' name='diet' label='Vegan'/>
                      <Form.Check type='checkbox' name='diet' label='Vegetarian'/>
@@ -206,10 +206,10 @@ function Signup(props) {
                      <Form.Check type='checkbox' name='diet' label='Halal'/>
                      <Form.Check type='checkbox' name='diet' label='Kosher'/>
                   </Form.Group>
-                  <Form.Group as={Col}>
+                  <Form.Group as={Col} md={6}>
                      <Form.Label>
                         Opt in for {' '}
-                        <OverlayTrigger placement='right' delay={ {show: 250, hide: 400} } overlay={Substitutions}>
+                        <OverlayTrigger placement='bottom' delay={ {show: 250, hide: 400} } overlay={Substitutions}>
                            <a href='#' className='text-decoration-none'>substitutions</a>
                         </OverlayTrigger>
                      </Form.Label>

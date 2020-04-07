@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {Button, Container, Row} from 'react-bootstrap';
+import {Container, Row} from 'react-bootstrap';
+import {List} from 'react-bootstrap-icons';
 import 'google-maps';
 
 import './Map.css';
@@ -39,13 +40,16 @@ class Map extends React.Component {
 
   render() {
     return (
-      <Container fluid className='d-flex flex-column justify-content-between mt-3'>
-        <Row className='d-flex justify-content-center'>
-          <div id='map'></div>
+      <Container fluid className='d-flex flex-column justify-content-between'>
+        <Row className='d-flex justify-content-around bg-primary p-3'>
+            <h1>Map View</h1>
+            <Link to='/list'>
+               <List size={48} color='black'/>
+            </Link>
+         </Row>
+        <Row className='d-flex justify-content-center flex-fill'>
+          <div id='map' className='flex-fill'></div>
         </Row>
-        <Link to='/list'>
-          <Button className='align-self-center mt-3'>List view</Button>
-        </Link>
       </Container>
     );
   }

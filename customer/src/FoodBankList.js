@@ -5,17 +5,17 @@ import {Map, CheckCircle, XCircle} from 'react-bootstrap-icons';
 
 function FoodBankList(props) {
    return (
-      <Container>
-         <Row className='d-flex justify-content-around'>
+      <Container fluid>
+         <Row className='d-flex justify-content-around bg-primary p-3'>
             <h1>Food Bank List</h1>
             <Link to='/map'>
                <Map size={48} color='black'/>
             </Link>
          </Row>
-         <Row className='d-flex'>
+         <Container className='d-flex'>
             <ListGroup className='flex-fill' variant='flush'>
                {props.foodbanks.map(bank => (
-                  <ListGroup.Item key={bank.id}>
+                  <ListGroup.Item key={'bank'+bank.id}>
                      <Link to={bank.eligible ? '/browse' : '/list'}
                       className='m-0 d-flex flex-row justify-content-between text-decoration-none'>
                         <span className='align-self-center p-3 text-dark'>
@@ -32,7 +32,7 @@ function FoodBankList(props) {
                   </ListGroup.Item>
                ))}
             </ListGroup>
-         </Row>
+         </Container>
       </Container>
    );
 }

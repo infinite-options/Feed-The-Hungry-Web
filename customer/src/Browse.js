@@ -46,8 +46,8 @@ function Browse(props) {
    }
 
    return (
-      <Container fluid className='p-3'>
-         <Row className='d-flex justify-content-around'>
+      <Container fluid>
+         <Row className='d-flex justify-content-around bg-primary p-3'>
             <Link to='/list'>
                <ArrowLeftShort onClick={props.back} size={48} color='black'/>
             </Link>
@@ -60,17 +60,19 @@ function Browse(props) {
          <Container>
             <ListGroup variant='flush' className='flex-fill'>
                {props.bank.food.map(item => (
-                  <ListGroup.Item key={props.bank.id} className='m-0 d-flex flex-row justify-content-between'>
-                     <div className='align-self-center' xs={8}>
-                        {item.name}
-                     </div>
-                     <div className='float-right'>
-                        <Dash onClick={()=>decreaseItemCount(item)} className='align-self-center'/>
-                        <span className='align-self-center mx-1'>
-                           {itemCounts.get(item)+'/'+item.max}
-                        </span>
-                        <Plus onClick={()=>increaseItemCount(item)} className='align-self-center'/>
-                     </div>
+                  <ListGroup.Item key={item.name} className='m-0 py-3 d-flex flex-row justify-content-between'>
+                     <span className='py-3 flex-fill'>
+                        <div className='align-self-center float-left'>
+                           {item.name}
+                        </div>
+                        <div className='float-right col-6 col-md-3 d-flex justify-content-between'>
+                           <Dash onClick={()=>decreaseItemCount(item)} className='align-self-center'/>
+                           <span className='align-self-center mx-1'>
+                              {itemCounts.get(item)+'/'+item.max}
+                           </span>
+                           <Plus onClick={()=>increaseItemCount(item)} className='align-self-center'/>
+                        </div>
+                     </span>
                   </ListGroup.Item>
                ))}
             </ListGroup>

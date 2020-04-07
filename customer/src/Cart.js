@@ -12,7 +12,7 @@ function Cart(props) {
         {props.cart.length === 0 ? 'Shopping cart empty' : ''}
         <ListGroup variant='flush'>
           {props.cart.map((elem) => 
-            <ListGroup.Item>
+            <ListGroup.Item key={props.cart.indexOf(elem)}>
               {elem.item.name}
               <span className='float-right'>{'x'+elem.count}</span>
             </ListGroup.Item>
