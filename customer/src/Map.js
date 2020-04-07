@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import {Button, Container, Row} from 'react-bootstrap';
 import 'google-maps';
 
@@ -42,7 +43,9 @@ class Map extends React.Component {
         <Row className='d-flex justify-content-center'>
           <div id='map'></div>
         </Row>
-        <Button className='align-self-center mt-3' onClick={this.props.toList}>List view</Button>
+        <Link to='/list'>
+          <Button className='align-self-center mt-3'>List view</Button>
+        </Link>
       </Container>
     );
   }

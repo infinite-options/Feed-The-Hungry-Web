@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
+import {Route} from 'react-router-dom';
 
 import SplashScreen from './SplashScreen.js';
-import Login from './Login.js';
-import Signup from './Signup.js';
 import FoodBankList from './FoodBankList.js';
 import Browse from './Browse.js';
 import Map from './Map.js';
@@ -18,33 +17,22 @@ let foodbanks = [
 ];
 
 function App() {
-  const [modal, setModal] = useState('none');
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [view, setView] = useState('list');
   const [currentBank, setCurrentBank] = useState(foodbanks[0]);
 
-  const alertIneligible = (bank) => {
-    setCurrentBank(bank);
-    setModal('ineligible');
-  }
-
   return (
-    loggedIn ? 
     <>
-      {view === 'map' ? <Map toList={() => setView('list')}/> :
-       view === 'list' ? <FoodBankList foodbanks={foodbanks} select={bank=>{setCurrentBank(bank); setView('bank')}}
-                          toMap={() => setView('map')} alertIneligible={(bank)=>alertIneligible(bank)}/> :
-       view === 'bank' ? <Browse bank={currentBank} back={()=>setView('list')}/> :
-       view === 'checkout' ? '' : ''}
-      <Ineligible show={modal==='ineligible'} bank={currentBank} close={() => setModal('none')}/>
-    </>
-    :
-    <>
-     <SplashScreen login={() => setModal('login')} signup={() => setModal('signup')}/>
-     <Login show={modal==='login'} close={() => setModal('none')}
-      success={() => setLoggedIn(true)}/>
-     <Signup show={modal==='signup'} close={() => setModal('none')}
-      success={() => setLoggedIn(true)}/>
+      <Route exact path='/'>
+        <SplashScreen />
+      </Route>
+      <Route exact path='/map'>
+        <Map />
+      </Route>
+      <Route exact path='/list'>
+        <FoodBankList foodbanks={foodbanks} select={bank=>setCurrentBank(bank)}/>
+      </Route>
+      <Route exact path='/browse'>
+        <Browse bank={currentBank}/>
+      </Route>
     </>
   );
 }

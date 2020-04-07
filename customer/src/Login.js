@@ -9,6 +9,10 @@ function Login(props) {
    const [pwordHidden, setPwordHidden] = useState(true);
    const [badLogin, setBadLogin] = useState(false);
 
+   const googleLogin = (user) => {
+      var profile = user.getBasicProfile();
+   }
+
    const submitLogin = event => {
       event.preventDefault();
       var form = event.target;
@@ -76,6 +80,9 @@ function Login(props) {
                <Button type='submit' className='align-self-center w-50'>Log in</Button>
             </Form>
          </Modal.Body>
+         <Modal.Footer>
+            <div class="g-signin2" data-onsuccess="googleLogin"></div>
+         </Modal.Footer>
       </Modal>
    );
 }

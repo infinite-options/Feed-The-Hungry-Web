@@ -5,11 +5,11 @@
 }
 
 .filter {
-  height: 800px;
+  height: 750px;
   background-color: rgba(0, 0, 0, .5);
   backdrop-filter: blur(8px);
 }
 
-.was-validated .form-group .invalid-feedback {
+.was-validated .form-group .is-invalid ~ .invalid-feedback {
   display: block;
 }

@@ -1,5 +1,6 @@
 import React from 'react';
-import {ListGroup, Container, Button, Row, Col} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
+import {ListGroup, Container, Row} from 'react-bootstrap';
 
 import {Plus, Dash, Bag, ArrowLeftShort} from 'react-bootstrap-icons';
 
@@ -47,7 +48,9 @@ function Browse(props) {
    return (
       <Container fluid className='p-3'>
          <Row className='d-flex justify-content-around'>
-            <ArrowLeftShort onClick={props.back} size={48}/>
+            <Link to='/list'>
+               <ArrowLeftShort onClick={props.back} size={48} color='black'/>
+            </Link>
             <h1>{props.bank.name}</h1>
             <span>
                <Bag onClick={() => setCartShown(true)} size={48} className='m-0 p-0'/>
