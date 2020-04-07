@@ -11,18 +11,6 @@ function SplashScreen() {
   const [pwordHidden, setPwordHidden] = React.useState(true);
   const [loginSuccess, setLoginSuccess] = React.useState(false);
 
-  const updateLogin = () => {
-    var form = document.querySelector('#login-form');
-    if (form.classList.contains('was-validated')) {
-      var email = document.querySelector('#login-email');
-      email.parentElement.classList.remove('is-valid', 'is-invalid');
-      email.parentElement.classList.add(email.checkValidity() ? 'is-valid' : 'is-invalid');
-      var pword = document.querySelector('#login-pword');
-      pword.parentElement.classList.remove('is-valid', 'is-invalid');
-      pword.parentElement.classList.add(pword.checkValidity() ? 'is-valid' : 'is-invalid');
-    }
-  }
-
   const submitLogin = event => {
     event.preventDefault();
     var form = event.target;
@@ -43,7 +31,6 @@ function SplashScreen() {
     } else {
       console.log('invalid form');
       form.classList.add('was-validated');
-      updateLogin();
     }
     return false;
  }
@@ -69,11 +56,8 @@ function SplashScreen() {
                         <Envelope />
                       </InputGroup.Text>
                     </InputGroup.Prepend>
-                    <Form.Control placeholder='email' id='login-email' required onInput={updateLogin}/>
+                    <Form.Control placeholder='email' id='login-email' required/>
                   </InputGroup>
-                  <Form.Control.Feedback type="invalid">
-                    Enter your email address
-                  </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group>
                   <Form.Label>Password</Form.Label>
@@ -84,7 +68,7 @@ function SplashScreen() {
                       </InputGroup.Text>
                     </InputGroup.Prepend>
                     <Form.Control type={pwordHidden ? 'password' : 'text'}
-                    placeholder='password' id='login-pword' required onInput={updateLogin}/>
+                    placeholder='password' id='login-pword' required/>
                     <InputGroup.Append onClick={() => setPwordHidden(!pwordHidden)}>
                       <InputGroup.Text>
                         {pwordHidden ? (
@@ -95,9 +79,6 @@ function SplashScreen() {
                       </InputGroup.Text>
                     </InputGroup.Append>
                   </InputGroup>
-                  <Form.Control.Feedback type="invalid">
-                    Enter your password
-                  </Form.Control.Feedback>
                 </Form.Group>
                 <Button type='submit' className='align-self-center w-50 my-3'>Log in</Button>
                 <span className='my-3'>
