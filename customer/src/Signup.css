@@ -1,0 +1,3 @@
+.was-validated .form-check-input:valid ~ .form-check-label {
+  color: #212529;
+}

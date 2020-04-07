@@ -5,7 +5,6 @@ import SplashScreen from './SplashScreen.js';
 import FoodBankList from './FoodBankList.js';
 import Browse from './Browse.js';
 import Map from './Map.js';
-import Ineligible from './Ineligible.js';
 
 let foodbanks = [
   {name: 'Food Not Bombs', id: 0, food: [{name: 'Apple', max: 5}, {name: 'Banana', max: 10}, {name: 'Orange', max: 8}], eligible: true},

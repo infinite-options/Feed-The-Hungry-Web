@@ -13,3 +13,7 @@
 .was-validated .form-group .is-invalid ~ .invalid-feedback {
   display: block;
 }
+
+#header {
+  margin: 50px 0;
+}

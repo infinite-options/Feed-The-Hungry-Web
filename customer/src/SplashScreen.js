@@ -55,8 +55,10 @@ function SplashScreen() {
       <Jumbotron>
         <div className='filter text-white'>
           <Container className='d-flex flex-column text-center'>
-            <h1 className='display-1 font-weight-bold'>Serving Now</h1>
-            <p className='h3'>Helping the hungry find the food they need</p>
+            <div id='header'>
+              <h1 className='display-1 font-weight-bold pb-3'>Serving Now</h1>
+              <p className='h3 mt-3'>Helping the hungry find the food they need</p>
+            </div>
             <Row className='align-self-center d-flex justify-content-between'>
               <Form className='d-flex flex-column' id='login-form' onSubmit={submitLogin} noValidate>
                 <Form.Group>
@@ -97,8 +99,10 @@ function SplashScreen() {
                     Enter your password
                   </Form.Control.Feedback>
                 </Form.Group>
-                <Button type='submit' className='align-self-center w-50'>Log in</Button>
-                <Button onClick={()=>setSignupShown(true)} className='align-self-center w-50'>Sign up</Button>
+                <Button type='submit' className='align-self-center w-50 my-3'>Log in</Button>
+                <span className='my-3'>
+                  No account? <a href='#' onClick={()=>setSignupShown(true)} className='text-decoration-none'>Sign up</a>
+                </span>
               </Form>
             </Row>
           </Container>
