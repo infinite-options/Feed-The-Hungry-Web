@@ -10,6 +10,29 @@
     
       gtag('config', 'UA-161840346-1');
     </script>
+
+    <!-- Facebook Analytics script -->
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '2608911142726884',
+          cookie     : true,
+          xfbml      : true,
+          version    : 'v6.0'
+        });
+          
+        FB.AppEvents.logPageView();   
+          
+      };
+
+      (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
     
     <meta charset="utf-8" />
     <meta name="google-signin-client_id" content="587875947666-sc5eu6fpe3ims2tbrutjvtkm2epv489v.apps.googleusercontent.com">
