@@ -23,9 +23,6 @@ function App() {
       <Route exact path='/'>
         <SplashScreen />
       </Route>
-      <Route exact path='/map'>
-        <Map />
-      </Route>
       <Route exact path='/list'>
         <FoodBankList foodbanks={foodbanks} select={bank=>setCurrentBank(bank)}/>
       </Route>

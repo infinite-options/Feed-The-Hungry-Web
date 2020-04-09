@@ -1,7 +1,10 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import {Jumbotron, Button, Container, Row, Form, InputGroup} from 'react-bootstrap';
-import {Lock, Envelope, Eye, EyeSlash} from 'react-bootstrap-icons';
+import {MdLockOutline} from 'react-icons/md';
+import {FiMail} from 'react-icons/fi';
+import {AiOutlineEye, AiOutlineEyeInvisible} from 'react-icons/ai';
+
 
 import Signup from './Signup.js';
 import './SplashScreen.css';
@@ -53,7 +56,7 @@ function SplashScreen() {
                   <InputGroup>
                     <InputGroup.Prepend>
                       <InputGroup.Text>
-                        <Envelope />
+                        <FiMail />
                       </InputGroup.Text>
                     </InputGroup.Prepend>
                     <Form.Control placeholder='email' id='login-email' required/>
@@ -64,7 +67,7 @@ function SplashScreen() {
                   <InputGroup>
                     <InputGroup.Prepend>
                       <InputGroup.Text>
-                        <Lock />
+                        <MdLockOutline />
                       </InputGroup.Text>
                     </InputGroup.Prepend>
                     <Form.Control type={pwordHidden ? 'password' : 'text'}
@@ -72,9 +75,9 @@ function SplashScreen() {
                     <InputGroup.Append onClick={() => setPwordHidden(!pwordHidden)}>
                       <InputGroup.Text>
                         {pwordHidden ? (
-                          <EyeSlash />
+                          <AiOutlineEyeInvisible />
                         ) : (
-                          <Eye />
+                          <AiOutlineEye />
                         )}
                       </InputGroup.Text>
                     </InputGroup.Append>

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Modal, Form, Button, Col, OverlayTrigger, Tooltip, InputGroup} from 'react-bootstrap';
-import {Eye, EyeSlash} from 'react-bootstrap-icons';
+import {AiOutlineEye, AiOutlineEyeInvisible} from 'react-icons/ai';
 
 import './Signup.css';
 
@@ -20,7 +20,9 @@ function Signup(props) {
    const first = React.useRef(null);
    const last = React.useRef(null);
    const dob = React.useRef(null);
+   const phone = React.useRef(null);
    const email = React.useRef(null);
+   const emailMatch = React.useRef(null);
    const pword = React.useRef(null);
    const pwordMatch = React.useRef(null);
    const addr1 = React.useRef(null);
@@ -32,8 +34,9 @@ function Signup(props) {
    const sub = React.useRef(null);
 
    const checkForm = () => {
+      const emailDoesMatch = email.current.value === emailMatch.current.value;
+      emailMatch.current.setCustomValidity(emailDoesMatch ? '' : 'invalid');
       const pwordDoesMatch = pword.current.value === pwordMatch.current.value;
-      pword.current.setCustomValidity(pwordDoesMatch ? '' : 'invalid');
       pwordMatch.current.setCustomValidity(pwordDoesMatch ? '' : 'invalid');
       state.current.setCustomValidity(addrShown && state.current.value === 'N/A' ? 'invalid' : '');
    }
@@ -72,26 +75,48 @@ function Signup(props) {
                      <Form.Control ref={last} type='text' placeholder='last' required/>
                   </Form.Group>
                </Form.Row>
-               <Form.Group>
-                  <Form.Label>Date of Birth</Form.Label>
-                  <Form.Control ref={dob} type='date' required min='1920-04-06' max='2002-04-06'/>
-               </Form.Group>
-               <Form.Group>
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control ref={email} type='email' placeholder='email' required/>
-               </Form.Group>
+               <Form.Row>
+                  <Form.Group as={Col} md={6}>
+                     <Form.Label>Date of Birth</Form.Label>
+                     <Form.Control ref={dob} type='date' required min='1920-04-06' max='2002-04-06'/>
+                  </Form.Group>
+                  <Form.Group as={Col} md={6}>
+                     <Form.Label>Phone Number</Form.Label>
+                     <Form.Control ref={phone} type='tel' placeholder='123-456-7890'
+                      required pattern='[0-9]{3}-[0-9]{3}-[0-9]{4}' maxLength={12}
+                      onChange={() => {
+                        if (phone.current.value.match('[0-9]{3}-[0-9]{3}') && !phone.current.value.match('[0-9]{3}-[0-9]{3}-')) {
+                           phone.current.value += '-';
+                        } else if (phone.current.value.match('[0-9]{3}') && !phone.current.value.match('-')) {
+                           phone.current.value += '-';
+                        } 
+                      }}/>
+                  </Form.Group>
+               </Form.Row>
+               <Form.Row>
+                  <Form.Group as={Col} md={6}>
+                     <Form.Label>Email</Form.Label>
+                     <Form.Control ref={email} type='email' placeholder='email'
+                      required onInput={checkForm}/>
+                  </Form.Group>
+                  <Form.Group as={Col} md={6}>
+                     <Form.Label>Confirm Email</Form.Label>
+                     <Form.Control ref={emailMatch} type='email' placeholder='confirm email'
+                      required onInput={checkForm}/>
+                  </Form.Group>
+               </Form.Row>
                <Form.Row>
                   <Form.Group as={Col} md={6}>
                      <Form.Label>Password</Form.Label>
                      <InputGroup>
                         <Form.Control ref={pword} type={pwordHidden ? 'password' : 'text'}
-                         placeholder='password' required onInput={checkForm}/>
+                         placeholder='password' required minLength={8} onInput={checkForm}/>
                         <InputGroup.Append onClick={() => setPwordHidden(!pwordHidden)}>
                            <InputGroup.Text>
                               {pwordHidden ? (
-                                 <EyeSlash />
+                                 <AiOutlineEyeInvisible />
                               ) : (
-                                 <Eye />
+                                 <AiOutlineEye />
                               )}
                            </InputGroup.Text>
                         </InputGroup.Append>
@@ -105,9 +130,9 @@ function Signup(props) {
                         <InputGroup.Append onClick={() => setPwordHidden(!pwordHidden)}>
                            <InputGroup.Text>
                               {pwordHidden ? (
-                                 <EyeSlash />
+                                 <AiOutlineEyeInvisible />
                               ) : (
-                                 <Eye />
+                                 <AiOutlineEye />
                               )}
                            </InputGroup.Text>
                         </InputGroup.Append>

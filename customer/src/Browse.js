@@ -2,7 +2,9 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {ListGroup, Container, Row} from 'react-bootstrap';
 
-import {Plus, Dash, Bag, ArrowLeftShort} from 'react-bootstrap-icons';
+import {FiPlus, FiMinus} from 'react-icons/fi';
+import {IoIosArrowBack} from 'react-icons/io';
+import {FaShoppingCart} from 'react-icons/fa';
 
 import Cart from './Cart.js';
 
@@ -49,11 +51,11 @@ function Browse(props) {
       <Container fluid>
          <Row className='d-flex justify-content-around bg-primary p-3'>
             <Link to='/list'>
-               <ArrowLeftShort onClick={props.back} size={48} color='black'/>
+               <IoIosArrowBack onClick={props.back} size={48} color='black'/>
             </Link>
             <h1>{props.bank.name}</h1>
             <span>
-               <Bag onClick={() => setCartShown(true)} size={48} className='m-0 p-0'/>
+               <FaShoppingCart onClick={() => setCartShown(true)} size={48} className='m-0 p-0'/>
                <p className='h3 d-inline'>{totalCount()}</p>
             </span>
          </Row>
@@ -66,11 +68,11 @@ function Browse(props) {
                            {item.name}
                         </div>
                         <div className='float-right col-6 col-md-3 d-flex justify-content-between'>
-                           <Dash onClick={()=>decreaseItemCount(item)} className='align-self-center'/>
+                           <FiMinus onClick={()=>decreaseItemCount(item)} className='align-self-center'/>
                            <span className='align-self-center mx-1'>
                               {itemCounts.get(item)+'/'+item.max}
                            </span>
-                           <Plus onClick={()=>increaseItemCount(item)} className='align-self-center'/>
+                           <FiPlus onClick={()=>increaseItemCount(item)} className='align-self-center'/>
                         </div>
                      </span>
                   </ListGroup.Item>
