@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import {Modal, Form, Button, Col, OverlayTrigger, Tooltip, InputGroup} from 'react-bootstrap';
+import {Modal, Form, Button, Row, Col, OverlayTrigger, Tooltip, InputGroup} from 'react-bootstrap';
+import {FaLeaf, FaCarrot} from 'react-icons/fa';
 import {AiOutlineEye, AiOutlineEyeInvisible} from 'react-icons/ai';
 
 import './Signup.css';
@@ -223,13 +224,28 @@ function Signup(props) {
                   </Form.Row>
                </div> 
                <Form.Row>
-                  <Form.Group as={Col} md={6}>
-                     <Form.Label>Dietary Restrictions</Form.Label>
-                     <Form.Check type='checkbox' name='diet' label='Vegan'/>
-                     <Form.Check type='checkbox' name='diet' label='Vegetarian'/>
-                     <Form.Check type='checkbox' name='diet' label='Gluten Free'/>
-                     <Form.Check type='checkbox' name='diet' label='Halal'/>
-                     <Form.Check type='checkbox' name='diet' label='Kosher'/>
+                  <Form.Group as={Col} md={6} className='pl-3'>
+                     <Form.Label className='d-block'>Dietary Restrictions</Form.Label>
+                     <Form.Row>
+                        <Form.Check inline type='checkbox' name='diet' label='Vegan'/>
+                        <FaLeaf className='align-self-center' color='green'/>
+                     </Form.Row>
+                     <Form.Row>
+                        <Form.Check inline type='checkbox' name='diet' label='Vegetarian'/>
+                        <FaCarrot className='align-self-center' color='orange'/>
+                     </Form.Row>
+                     <Form.Row>
+                        <Form.Check inline type='checkbox' name='diet' label='Gluten Free'/>
+                        <FaLeaf className='align-self-center'/>
+                     </Form.Row>
+                     <Form.Row>
+                        <Form.Check inline type='checkbox' name='diet' label='Halal'/>
+                        <FaLeaf className='align-self-center'/>
+                     </Form.Row>
+                     <Form.Row>
+                        <Form.Check inline type='checkbox' name='diet' label='Kosher'/>
+                        <FaLeaf className='align-self-center'/>
+                     </Form.Row>
                   </Form.Group>
                   <Form.Group as={Col} md={6}>
                      <Form.Label>

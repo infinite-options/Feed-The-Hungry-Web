@@ -46,8 +46,7 @@ function SplashScreen() {
         <div className='filter text-white'>
           <Container className='d-flex flex-column text-center'>
             <div id='header'>
-              <h1 className='display-1 font-weight-bold pb-3'>Serving Now</h1>
-              <p className='h3 mt-3'>Helping the hungry find the food they need</p>
+              <h1 className='display-4 font-weight-bold pb-3'>Feed the Hungry</h1>
             </div>
             <Row className='align-self-center d-flex justify-content-between'>
               <Form className='d-flex flex-column' id='login-form' onSubmit={submitLogin} noValidate>

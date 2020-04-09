@@ -12,7 +12,7 @@ function FoodBankList(props) {
    return (
       <Container fluid className='p-0 d-flex flex-column'>
          <Row className='bg-primary w-100 p-3 m-0 d-flex justify-content-between'>
-            <h1 className='flex-fill text-center'>Food Banks</h1>
+            <h1 className='flex-fill text-center'>Feed the Hungry</h1>
             <Col  className='float-right d-flex justify-content-around'>
                <IoIosMenu size={48} color='black' className='d-lg-none mx-3' onClick={()=>setExpanded(!expanded)}/>
                <GoSearch size={48} color='black'/>

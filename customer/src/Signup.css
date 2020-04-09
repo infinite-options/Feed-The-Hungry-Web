@@ -1,3 +1,7 @@
 .was-validated .form-check-input:valid ~ .form-check-label {
   color: #212529;
 }
+
+.icon-stack * {
+  position: relative;
+}
