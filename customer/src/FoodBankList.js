@@ -1,30 +1,69 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {Container, Row, ListGroup, Col, Collapse} from 'react-bootstrap';
-import {FiCheckCircle, FiXCircle} from 'react-icons/fi';
 import {GoSearch} from 'react-icons/go';
 import {IoIosMenu} from 'react-icons/io';
 
+import 'google-maps';
 import Map from './Map.js';
 
 class FoodBankList extends Component {
    constructor(props) {
       super(props);
+      this.geocoder = new window.google.maps.Geocoder();
+      this.location = null;
       this.state = {
          expanded: false,
          banks: [],
-         loaded: false
+         loaded: false,
+         location: null
       }
+      this.mapRef = React.createRef();
    }
 
-   initialize = async() => {
+   getGeocode = (bank) => {
+      const geocoder = this.geocoder;
+     return new Promise(function(resolve, reject) {
+       geocoder.geocode({
+         address: bank.address+', '+bank.city+', '+bank.state+', '+bank.zip
+       }, function(result, status) {
+         if (status == 'OK') {
+           resolve(result[0].geometry.location);
+         } else {
+           reject(status);
+         }
+       });
+     });
+   }
+
+   initialize = async(resolve) => {
+      const setLocation = (pos) => {this.location = pos};
       let response = await fetch('https://feed-the-hungry.netlify.com/api/banks/');
       let banks = await response.json();
       this.setState({banks: banks});
+      if (navigator.geolocation) {
+         navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+               lat: position.coords.latitude,
+               lng: position.coords.longitude
+            }
+            setLocation(pos);
+            resolve();
+         });
+      }
    }
 
    componentDidMount() {
-      this.initialize().then(this.setState({loaded: true}));
+      this.initialize(()=>this.setState({loaded: true}));
+   }
+
+   componentDidUpdate() {
+      if (this.mapRef.current == null) {
+         setTimeout(this.forceUpdate, 1000);
+         return;
+      } else {
+         this.mapRef.current.forceUpdate();
+      }
    }
 
    render() {
@@ -41,9 +80,9 @@ class FoodBankList extends Component {
                   <GoSearch size={48} color='black'/>
                </Col>
             </Row>
-            <Row className='w-100 m-0 flex-fill'>
+            <Row className='h-100'>
                <Collapse as={Col} lg={4} in={this.state.expanded}>
-                  <ListGroup variant='flush' className='p-0 d-lg-block'>
+                  <ListGroup variant='flush' className='p-0 d-lg-inline-block'>
                      {this.state.banks.map(bank => (
                         <ListGroup.Item key={'bank'+bank.id}>
                            <Link to='/browse' className='m-0 d-flex flex-row
@@ -52,16 +91,15 @@ class FoodBankList extends Component {
                               <span className='align-self-center p-3 text-dark'>
                                  {bank.name}
                               </span>
-                              <span className='align-self-center p-3'>
-                                 
-                              </span>
                            </Link>
                         </ListGroup.Item>
                      ))}
                   </ListGroup>
                </Collapse>
-               <Col lg={8} className='p-0'>
-                  <Map banks={this.state.banks} select={this.props.select}/>
+               <Col lg={8} className='p-0 h-100 d-lg-inline-block'>
+                  <Map banks={this.state.banks} select={this.props.select}
+                   pos={this.location} getGeocode={this.getGeocode}
+                   ref={this.mapRef}/>
                </Col>
             </Row>
          </Container>

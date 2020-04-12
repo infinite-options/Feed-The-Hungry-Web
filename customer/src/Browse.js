@@ -2,11 +2,11 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {ListGroup, Container, Row} from 'react-bootstrap';
 
-import {FiPlus, FiMinus} from 'react-icons/fi';
 import {IoIosArrowBack} from 'react-icons/io';
 import {FaShoppingCart} from 'react-icons/fa';
 
 import Cart from './Cart.js';
+import ItemList from './ItemList.js';
 
 class Browse extends Component {
    constructor(props) {
@@ -36,12 +36,16 @@ class Browse extends Component {
          }
          inventory.push(entry);
          items.set(fdata, 0);
+         this.setState({inventory: inventory, itemCounts: items})
       });
       console.log(items);
       this.setState({
          inventory,
          itemCounts: items
-      }, ()=>this.setState({loaded: true}));
+      }, () => {
+         this.setState({loaded: true});
+         this.forceUpdate();
+      });
    }
 
    componentDidMount() {
@@ -100,25 +104,8 @@ class Browse extends Component {
                </span>
             </Row>
             <Container>
-               {this.state.inventory}
-               <ListGroup variant='flush' className='flex-fill'>
-                  {this.state.inventory.map(entry => (
-                     <ListGroup.Item key={entry.item.name} className='m-0 py-3 d-flex flex-row justify-content-between'>
-                        <span className='py-3 flex-fill'>
-                           <div className='align-self-center float-left'>
-                              {entry.item.name}
-                           </div>
-                           <div className='float-right col-6 col-md-3 d-flex justify-content-between'>
-                              <FiMinus onClick={()=>this.decreaseItemCount(entry.item)} className='align-self-center'/>
-                              <span className='align-self-center mx-1'>
-                                 {this.state.itemCounts.get(entry.item)+'/'+entry.max}
-                              </span>
-                              <FiPlus onClick={()=>this.increaseItemCount(entry.item, entry.max)} className='align-self-center'/>
-                           </div>
-                        </span>
-                     </ListGroup.Item>
-                  ))}
-               </ListGroup>
+               <ItemList inventory={this.state.inventory} increase={this.increaseItemCount}
+                decrease={this.decreaseItemCount} itemCounts={this.state.itemCounts}/>
             </Container>
             <Cart hide={()=>this.setState({cartShown: false})}
              show={this.state.cartShown} cart={this.cart()}/>
