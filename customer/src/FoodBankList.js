@@ -18,7 +18,7 @@ class FoodBankList extends Component {
    }
 
    initialize = async() => {
-      let response = await fetch('http://feed-the-hungry.netlify.com/api/banks/');
+      let response = await fetch('https://feed-the-hungry.netlify.com/api/banks/');
       let banks = await response.json();
       this.setState({banks: banks});
    }

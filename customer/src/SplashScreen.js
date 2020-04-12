@@ -20,7 +20,7 @@ function SplashScreen() {
     var email = document.querySelector('#login-email');
     var pword = document.querySelector('#login-pword');
     if (form.checkValidity()) {
-      fetch('http://api.hashify.net/hash/sha256/hex?value='+pword.value)
+      fetch('https://api.hashify.net/hash/sha256/hex?value='+pword.value)
       .then(res => {
         return res.json();
       }).then(data => {

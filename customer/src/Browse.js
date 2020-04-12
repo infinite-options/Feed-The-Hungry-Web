@@ -20,13 +20,13 @@ class Browse extends Component {
    }
 
    initialize = async() => {
-      let response = await fetch('http://feed-the-hungry.netlify.com/api/inventory/'+this.props.bank.id+'/');
+      let response = await fetch('https://feed-the-hungry.netlify.com/api/inventory/'+this.props.bank.id+'/');
       let data = await response.json();
       console.log('got inventory');
       var inventory = [];
       var items = new Map();
       data.forEach(async(datapoint) => {
-         let fres = await fetch('http://feed-the-hungry.netlify.com/api/food/'+datapoint.id+'/');
+         let fres = await fetch('https://feed-the-hungry.netlify.com/api/food/'+datapoint.id+'/');
          let fdata = await fres.json();
          console.log('got food item');
          var entry = {
