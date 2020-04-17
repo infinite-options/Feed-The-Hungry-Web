@@ -14,7 +14,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('https://feed-the-hungry.netlify.com/api/banks/0/')
+    fetch('https://feed-the-hungry.netlify.app/api/banks/0/')
     .then(res => res.json().then(data => {
       this.setState({currentBank: data});
     }));

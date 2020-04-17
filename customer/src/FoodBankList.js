@@ -38,7 +38,7 @@ class FoodBankList extends Component {
 
    initialize = async(resolve) => {
       const setLocation = (pos) => {this.location = pos};
-      let response = await fetch('https://feed-the-hungry.netlify.com/api/banks/');
+      let response = await fetch('https://feed-the-hungry.netlify.app/api/banks/');
       let banks = await response.json();
       this.setState({banks: banks});
       if (navigator.geolocation) {

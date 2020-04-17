@@ -15,7 +15,7 @@ class Map extends React.Component {
   }
 
   initialize = async() => {
-    if (window.location.href != 'https://feed-the-hungry.netlify.com/list') {
+    if (window.location.href != 'https://feed-the-hungry.netlify.app/list') {
       return;
     }
     if (!document.querySelector('#map')) {
