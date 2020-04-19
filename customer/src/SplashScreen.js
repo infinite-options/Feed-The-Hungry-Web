@@ -38,7 +38,8 @@ function SplashScreen() {
     return false;
  }
 
- const login = () => {
+ const externalLogin = () => {
+   console.log('signed in externally');
    setLoginSuccess(true);
  }
 
@@ -92,8 +93,8 @@ function SplashScreen() {
                 </span>
               </Form>
             </Row>
-            <div className='g-signin2 mx-auto my-2' data-longtitle='true' data-width='195' data-height='28' data-theme='dark' data-onsuccess={login}></div>
-            <div className='fb-login-button' data-button-type='continue_with' data-size='medium' data-onlogin={login}/>
+            <div className='g-signin2 mx-auto my-2' data-longtitle='true' data-width='195' data-height='28' data-theme='dark' data-onsuccess={externalLogin}></div>
+            <div className='fb-login-button' data-button-type='continue_with' data-size='medium' data-onlogin={externalLogin}/>
           </Container>
         </div>
         <Signup show={signupShown} close={() => setSignupShown(false)}
